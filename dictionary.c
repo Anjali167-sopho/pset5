@@ -14,11 +14,42 @@
 /**
  * Returns true if word is in dictionary else false.
  */
-bool check(const char* word)
+ bool check(const char* word)
 {
     // TODO
+    // creates a temp variable that stores a lower-cased version of the word
+    char temp[LENGTH + 1];
+    int len = strlen(word);
+    for(int i = 0; i < len; i++)
+        temp[i] = tolower(word[i]);
+    temp[len] = '\0';
+    
+    // find what index of the array the word should be in
+    int index = hash(temp);
+    
+    // if hashtable is empty at index, return false
+    if (hashtable[index] == NULL)
+    {
+        return false;
+    }
+    
+    // create cursor to compare to word
+    node* cursor = hashtable[index];
+    
+    // if hashtable is not empty at index, iterate through words and compare
+    while (cursor != NULL)
+    {
+        if (strcmp(temp, cursor->word) == 0)
+        {
+            return true;
+        }
+        cursor = cursor->next;
+    }
+    
+    // if you don't find the word, return false
     return false;
 }
+
 
 /**
  * Loads dictionary into memory.  Returns true if successful else false.
