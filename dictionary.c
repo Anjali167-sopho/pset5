@@ -122,8 +122,36 @@
 /**
  * Unloads dictionary from memory.  Returns true if successful else false.
  */
-bool unload(void)
+ bool unload(void)
 {
     // TODO
-    return false;
+    // create a variable to go through index
+    int index = 0;
+    
+    // iterate through entire hashtable array
+    while (index < SIZE)
+    {
+        // if hashtable is empty at index, go to next index
+        if (hashtable[index] == NULL)
+        {
+            index++;
+        }
+        
+        // if hashtable is not empty, iterate through nodes and start freeing
+        else
+        {
+            while(hashtable[index] != NULL)
+            {
+                node* cursor = hashtable[index];
+                hashtable[index] = cursor->next;
+                free(cursor);
+            }
+            
+            // once hashtable is empty at index, go to next index
+            index++;
+        }
+    }
+    
+    // return true if successful
+    return true;
 }
